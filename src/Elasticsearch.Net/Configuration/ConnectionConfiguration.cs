@@ -1,4 +1,4 @@
-// Licensed to Elasticsearch B.V under one or more agreements.
+﻿// Licensed to Elasticsearch B.V under one or more agreements.
 // Elasticsearch B.V licenses this file to you under the Apache 2.0 License.
 // See the LICENSE file in the project root for more information
 
@@ -200,7 +200,8 @@ namespace Elasticsearch.Net
 		private bool _sniffOnStartup;
 		private bool _throwExceptions;
 		private bool _transferEncodingChunked;
-		private IMemoryStreamFactory _memoryStreamFactory = RecyclableMemoryStreamFactory.Default;
+		//private IMemoryStreamFactory _memoryStreamFactory = RecyclableMemoryStreamFactory.Default;
+		private IMemoryStreamFactory _memoryStreamFactory = Elasticsearch.Net.MemoryStreamFactory.Default;
 
 		private string _userAgent = ConnectionConfiguration.DefaultUserAgent;
 		private Func<HttpMethod, int, bool> _statusCodeToResponseSuccess;
@@ -209,7 +210,7 @@ namespace Elasticsearch.Net
 		{
 			_connectionPool = connectionPool;
 			_connection = connection ?? new HttpConnection();
-			var serializer = requestResponseSerializer ?? new LowLevelRequestResponseSerializer();
+			var serializer = requestResponseSerializer ?? new SystemTextJsonSerializer();
 			UseThisRequestResponseSerializer = new DiagnosticsSerializerProxy(serializer);
 
 			_connectionLimit = ConnectionConfiguration.DefaultConnectionLimit;

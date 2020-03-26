@@ -53,7 +53,7 @@ namespace Elasticsearch.Net.VirtualizedCluster
 				.StaticConnectionPool()
 				.AllDefaults()
 				.Connection;
-		
+
 		public static VirtualClusterConnection Error() =>
 			VirtualClusterWith
 				.Nodes(1)
@@ -104,7 +104,7 @@ namespace Elasticsearch.Net.VirtualizedCluster
 		{
 			if (!_calls.ContainsKey(requestData.Uri.Port))
 				throw new Exception($"Expected a call to happen on port {requestData.Uri.Port} but received none");
-			
+
 			try
 			{
 				var state = _calls[requestData.Uri.Port];
@@ -268,7 +268,7 @@ namespace Elasticsearch.Net.VirtualizedCluster
 			if (_defaultResponseBytes != null) return _defaultResponseBytes;
 
 			var response = DefaultResponse;
-			using (var ms = RecyclableMemoryStreamFactory.Default.Create())
+			using (var ms = MemoryStreamFactory.Default.Create())
 			{
 				LowLevelRequestResponseSerializer.Instance.Serialize(response, ms);
 				_defaultResponseBytes = ms.ToArray();
